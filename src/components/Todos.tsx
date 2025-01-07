@@ -15,13 +15,19 @@ export const Todos: React.FC = () => {
   })
 
   return (
-    <section className=' w-full h-full grid grid-cols-3 grid-rows-2 gap-4 '>
+    <ul className=' todo-list w-full h-full grid grid-cols-3 grid-rows-2'  ref={parent}>
       {filteredTodos.map(todo => (
-    <ul className={'w-full h-full flex items-center justify-center '} key={todo.todoID} ref={parent}>
-        <div  className='bg-green-700 h-52 w-72 flex items-center justify-center border-solid rounded-3xl ' >
+        <div 
+        className={`
+            ${todo.status ? 'bg-UI-ui-completed-green' : 'bg-UI-highligth-element '} 
+            ${todo.important ? 'bg-UI-ui-important-red' : 'bg-UI-highligth-element '}
+              h-52 w-72 m-auto 
+              flex items-center justify-center 
+              border-solid rounded-3xl`}
+        key={todo.todoID} >
         <li
           onDoubleClick={() => { setIsEditing(todo.todoID.toString()) }}
-          className={`list-none text-center text-3xl justify-items-center m-auto
+          className={` w-full h-full  list-none text-center text-3xl justify-items-center
             ${todo.status ? 'completed' : ''} 
             ${isEditing === todo.todoID.toString()
                ? 'editing'
@@ -32,14 +38,13 @@ export const Todos: React.FC = () => {
             key={todo.todoID}
             todoID={todo.todoID}
             title={todo.title}
-            status={todo.status}
+            status={todo.status} 
           />
         </li>
-
+              
         </div>
-    </ul>
       ))}
 
-    </section>
+      </ul>
   )
 }

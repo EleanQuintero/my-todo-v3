@@ -1,0 +1,36 @@
+
+
+.login-input{
+    display: grid;
+    gap: 10px;
+}
+
+.login-input input{
+    text-align: center;
+    background-color: #727171;
+    font-size: 1.1em;
+    border: 3px solid #727171;
+    border-radius: 20px;
+    color: #000000;
+}
+
+.login-input button{
+    margin: auto;
+    display: flex;
+    margin-top: 0.5em;
+    background-color: #727171;;
+    padding: 7px;
+    border: 3px solid #ffffff23;
+    border-radius: 20px;
+    text-align: center;
+    
+}
+
+.login-input button:hover{
+    color: #000000;
+    border: 3px solid rgba(223, 41, 41, 0.466);
+    background-color: rgba(223, 41, 41, 0.466);
+    cursor: pointer;
+    
+}
+
