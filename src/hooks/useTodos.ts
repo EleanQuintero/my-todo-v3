@@ -20,6 +20,7 @@ export const useTodos = (): useTodosType => {
   const getTodos = async (): Promise<void> => {
     try {
       const newTodos = await useFetchTodos(userData.id as string)
+      console.log(newTodos)
       if (newTodos !== undefined) {
         setTodos(newTodos)
       } else {

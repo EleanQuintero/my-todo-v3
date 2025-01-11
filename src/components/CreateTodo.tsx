@@ -23,13 +23,13 @@ export const CreateTodo: React.FC = () => {
   ): Promise<void> => {
     try {
       const newTodo: Newtodo = {
-        userID: userData.id,
+        userid: userData.id,
         title,
-        status: false,
+        todo_status: false,
         important: isImportant,
         createdTo: createdTo,
       };
-      /// await postTodo(newTodo)
+      await postTodo(newTodo)
       console.log(newTodo);
     } catch (error) {
       if (error instanceof Error) throw new Error(error.message);

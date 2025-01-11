@@ -15,12 +15,12 @@ export const Todos: React.FC = () => {
   })
 
   return (
-    <ul className=' todo-list w-full h-full grid grid-cols-3 grid-rows-2'  ref={parent}>
+    <ul className=' todo-list w-full h-screen grid grid-cols-3 grid-rows-2 gap-6'  ref={parent}>
       {filteredTodos.map(todo => (
         <div 
         className={`
-            ${todo.status ? 'bg-UI-ui-completed-green' : 'bg-UI-highligth-element '} 
-            ${todo.important ? 'bg-UI-ui-important-red' : 'bg-UI-highligth-element '}
+          ${todo.important ? 'bg-UI-ui-important-red' : 'bg-UI-highligth-element '}
+          ${todo.status ? 'bg-UI-ui-completed-green' : 'bg-UI-highligth-element '} 
               h-52 w-72 m-auto 
               flex items-center justify-center 
               border-solid rounded-3xl`}

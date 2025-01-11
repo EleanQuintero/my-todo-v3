@@ -1,3 +1,6 @@
+import "cally" 
+
+
 interface DateInputProps {
   checkDate: boolean;
   setCheckDate: React.Dispatch<React.SetStateAction<boolean>>;
@@ -38,7 +41,7 @@ export const DateInput: React.FC<DateInputProps> = ({
           </svg>
         </span>
       </label>
-
+      <div className={`${checkDate ? "flex items-center justify-center z-10 w-52 h-40 bg-slate-500" : "hidden"}`}>
       <input
         className={`inline-flex items-center ml-2 mt-2 ${checkDate ? "block" : "hidden"}`}
         type="date"
@@ -46,6 +49,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         value={todoDate}
         onChange={(e) => setTodoDate(e.target.value)}
       />
+      </div>
     </div>
   );
 };

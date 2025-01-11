@@ -10,9 +10,9 @@ export interface Todo {
 }
 
 export interface Newtodo {
-  userID: string | null
+  userid: string | null
   title: string
-  status: boolean
+  todo_status: boolean
   important: boolean
   todoID?: number
   createdTo?: string

@@ -7,6 +7,8 @@ interface todoData {
   todo_title: TodoTitle
   todo_status: TodoCompleted
   created_at: TodoCreated
+  important: boolean
+  createdTo: string
 }
 
 export const useFetchTodos = async (id: string ): Promise<Todo[] | undefined> => {
@@ -19,7 +21,10 @@ export const useFetchTodos = async (id: string ): Promise<Todo[] | undefined> =>
         userID: todo.user_id,
         title: todo.todo_title,
         status: todo.todo_status,
-        created: todo.created_at
+        created: todo.created_at,
+        important: todo.important,
+        createdTo: todo.createdTo
+
       }))
     }
   } catch (error) {
