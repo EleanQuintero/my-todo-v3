@@ -14,7 +14,9 @@ export const CreateTodo: React.FC = () => {
   const [checkDate, setCheckDate] = useState<boolean>(false);
   const [important, setImportant] = useState<boolean>(false);
 
-  const [todoDate, setTodoDate] = useState<string>("");
+  const [todoDate, setTodoDate] = useState<Date>(new Date()) 
+
+  const initialDate = new Date();
 
   const handleAddTodo = async (
     title: string,
@@ -45,12 +47,13 @@ export const CreateTodo: React.FC = () => {
     if (inputValue.trim() !== "") {
       const title: string = inputValue.trim();
       const isImportant: boolean = important;
-      const createdTo: string = todoDate;
+      const createdTo: string = todoDate?.toISOString().replace('T', ' ').replace(/\..+/, '')
+      console.log(createdTo)
 
       await handleAddTodo(title, isImportant, createdTo);
       setInputValue("");
       setImportant(false);
-      setTodoDate("");
+      setTodoDate(initialDate);
       setCheckDate(false);
     }
   };
