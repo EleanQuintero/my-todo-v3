@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* Fondo claro */
+    --foreground: 222.2 84% 4.9%; /* Texto oscuro */
+    
+    /* ... resto de variables de shadcn */
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%; /* Fondo oscuro */
+    --foreground: 210 40% 98%; /* Texto claro */
+  }
+}
 :root {
   --background: #0056b3;
   --foreground: #171717;
