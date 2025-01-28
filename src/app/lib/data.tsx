@@ -25,6 +25,7 @@ export async function fetchUsers({ username, password }: userData): Promise<user
         } else {
             const json = await response.json();
             const user: userData = json
+            window.location.href = '/dashboard'
             return user;
         }
     } catch (error: unknown) {

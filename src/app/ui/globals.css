@@ -17,24 +17,19 @@
     --foreground: 210 40% 98%; /* Texto claro */
   }
 }
-:root {
-  --background: #0056b3;
-  --foreground: #171717;
-}
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0056b3;
-    --foreground: #ededed;
+    --background: 222.2 84% 4.9%; /* Fondo oscuro */
+    --foreground: 210 40% 98%; /* Texto claro */
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   margin: auto;
   padding: 0;
-  height: 100vh;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 

@@ -64,7 +64,7 @@ export default {
   			}
   		},
   		gridTemplateRows: {
-  			'custom-layout': '100px 1fr 50px',
+  			'custom-layout': '50px 1fr 50px',
   			display: '100px 1fr'
   		},
   		gridTemplateColumns: {

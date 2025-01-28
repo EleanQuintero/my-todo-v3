@@ -19,13 +19,13 @@ interface LogRegisterInputProps {
 
 export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error}: LogRegisterInputProps) => {
   return (
-    <Tabs defaultValue="Login" className="w-[400px]">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="Login">Login</TabsTrigger>
-        <TabsTrigger value="Register">Register</TabsTrigger>
+    <Tabs defaultValue="Login" className="w-[400px] ">
+      <TabsList className="grid w-full grid-cols-2 ">
+        <TabsTrigger value="Login" className="bg-background text-foreground border border-muted data-[state=active]:bg-primary data-[state=active]:text-white">Login</TabsTrigger>
+        <TabsTrigger value="Register" className="bg-background text-foreground border border-muted data-[state=active]:bg-primary data-[state=active]:text-white">Register</TabsTrigger>
       </TabsList>
       <TabsContent value="Login">
-        <Card className="bg-background text-foreground border" >
+        <Card className="bg-background text-foreground border">
           <CardHeader>
             <CardTitle>Login</CardTitle>
             <CardDescription>
@@ -33,14 +33,14 @@ export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <form className="text-black font-semibold" onSubmit={handleLoginSumbit}>
+            <form className="font-semibold" onSubmit={handleLoginSumbit}>
               <div className="space-y-1">
-              <Label className="text-sm font-medium" htmlFor="username">Usuario</Label>
-                <Input className="bg-background border-muted"  name="username" type="text" placeholder="Nombre de usuario" />
+                <Label className="text-sm font-medium" htmlFor="username">Usuario</Label>
+                <Input className="bg-background border-muted" name="username" type="text" />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="">Contraseña</Label>
-                <Input name="password" type="password" placeholder="Contraseña" />
+                <Label htmlFor="password">Contraseña</Label>
+                <Input name="password" type="password" />
               </div>
               {error && <p className="text-red-700 font-semibold">{error}</p>}
               <Button type="submit">Save changes</Button>
@@ -51,25 +51,28 @@ export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error
         </Card>
       </TabsContent>
       <TabsContent value="Register">
-        <Card>
+        <Card className="bg-background text-foreground border">
           <CardHeader>
-            <CardTitle>Password</CardTitle>
+            <CardTitle>Register</CardTitle>
             <CardDescription>
-              Change your password here. After saving, you ll be logged out.
+              Make changes to your Register here. Click save when you re done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
-              <Input id="new" type="password" />
-            </div>
+            <form className="font-semibold" onSubmit={handleRegisterSumbit}>
+              <div className="space-y-1">
+                <Label className="text-sm font-medium" htmlFor="username">Usuario</Label>
+                <Input className="bg-background border-muted" name="username" type="text" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="password">Contraseña</Label>
+                <Input name="password" type="password" />
+              </div>
+              {error && <p className="text-red-700 font-semibold">{error}</p>}
+              <Button type="submit">Save changes</Button>
+            </form>
           </CardContent>
           <CardFooter>
-            <Button>Save password</Button>
           </CardFooter>
         </Card>
       </TabsContent>
