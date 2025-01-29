@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,22 +11,51 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { fetchProfile, fetchUsers } from "@/app/lib/data";
+import { useContext, useState } from "react";
+import { userData } from "@/types";
+import { userDataContext } from "@/contexts/userDataContext";
 
-interface LogRegisterInputProps {
-  handleLoginSumbit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
-  handleRegisterSumbit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
-  error: string;
+
+interface profileData {
+  id: string;
+  username: string;
+  password: string;
+  avatar: string;
 }
 
-export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error}: LogRegisterInputProps) => {
+export const LogRegisterInput = () => {
+  const [error, setError] = useState({ status: false, message: "" });
+  const { setUserData } = useContext(userDataContext);
+
+  const handleLoginSumbit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const user = Object.fromEntries(
+        new window.FormData(event.currentTarget)
+      ) as unknown as profileData;
+      await fetchUsers(user);
+      const profile = await fetchProfile();
+      setUserData(profile as userData);
+      console.log("sumbit");
+    } catch (error) {
+      if (error instanceof Error) {
+        setError({ status: true, message: error.message });
+        setTimeout(() => {
+          setError({ status: false, message: "" });
+        }, 5000);
+      }
+    }
+  };
+
   return (
     <Tabs defaultValue="Login" className="w-[400px] ">
       <TabsList className="grid w-full grid-cols-2 ">
-        <TabsTrigger value="Login" className="bg-background text-foreground border border-muted data-[state=active]:bg-primary data-[state=active]:text-white">Login</TabsTrigger>
-        <TabsTrigger value="Register" className="bg-background text-foreground border border-muted data-[state=active]:bg-primary data-[state=active]:text-white">Register</TabsTrigger>
+        <TabsTrigger value="Login" className="">Login</TabsTrigger>
+        <TabsTrigger value="Register" className="">Register</TabsTrigger>
       </TabsList>
       <TabsContent value="Login">
-        <Card className="bg-background text-foreground border">
+        <Card className="border">
           <CardHeader>
             <CardTitle>Login</CardTitle>
             <CardDescription>
@@ -33,7 +63,7 @@ export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <form className="font-semibold" onSubmit={handleLoginSumbit}>
+            <form className="font-semibold gap-6" onSubmit={handleLoginSumbit}>
               <div className="space-y-1">
                 <Label className="text-sm font-medium" htmlFor="username">Usuario</Label>
                 <Input className="bg-background border-muted" name="username" type="text" />
@@ -42,8 +72,10 @@ export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error
                 <Label htmlFor="password">Contraseña</Label>
                 <Input name="password" type="password" />
               </div>
-              {error && <p className="text-red-700 font-semibold">{error}</p>}
-              <Button type="submit">Save changes</Button>
+              <div className={`${error.status ? "block my-3" : "hidden"}`}>
+              {error.status && <p className="text-red-700 font-semibold">{error.message}</p>}
+              </div>
+              <Button className="my-3" type="submit">Save changes</Button>
             </form>
           </CardContent>
           <CardFooter>
@@ -51,7 +83,7 @@ export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error
         </Card>
       </TabsContent>
       <TabsContent value="Register">
-        <Card className="bg-background text-foreground border">
+        <Card className="border">
           <CardHeader>
             <CardTitle>Register</CardTitle>
             <CardDescription>
@@ -59,7 +91,7 @@ export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <form className="font-semibold" onSubmit={handleRegisterSumbit}>
+            <form className="font-semibold" onSubmit={() => console.log("submit")}>
               <div className="space-y-1">
                 <Label className="text-sm font-medium" htmlFor="username">Usuario</Label>
                 <Input className="bg-background border-muted" name="username" type="text" />
@@ -68,7 +100,7 @@ export const LogRegisterInput = ({handleLoginSumbit, handleRegisterSumbit, error
                 <Label htmlFor="password">Contraseña</Label>
                 <Input name="password" type="password" />
               </div>
-              {error && <p className="text-red-700 font-semibold">{error}</p>}
+              {error.status && <p className="text-red-700 font-semibold">{error.message}</p>}
               <Button type="submit">Save changes</Button>
             </form>
           </CardContent>

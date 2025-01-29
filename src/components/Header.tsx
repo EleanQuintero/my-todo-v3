@@ -1,5 +1,7 @@
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import ThemeSwitch  from "@/components/ThemeSwitch"
 
 export function Header() {
   return (
@@ -31,7 +33,9 @@ export function Header() {
           <Button size={"lg"} asChild>
             <Link className="text-lg font-medium transition-colors hover:text-primary" href="/Login">Registrarse</Link>
           </Button>
+          <ThemeSwitch />
         </div>
+        
       </div>
     </header>
   )
