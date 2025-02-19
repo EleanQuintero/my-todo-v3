@@ -2,10 +2,10 @@ import { TODO_FILTERS } from './const'
 
 export interface Todo {
   todoID: number
-  userid?: string | null
+  userid: string 
   title: string
   status: boolean
-  created?: string
+  createdTo?: string
   important: boolean
 }
 
@@ -19,6 +19,7 @@ export interface Newtodo {
 }
 
 export interface UpdateTodoProps {
+  userid: string
   todoID: number
   todoTitle?: string
   todoStatus?: boolean
@@ -30,7 +31,8 @@ export interface DeleteTodoProps {
 
 export type TodoId = Pick<Todo, 'todoID'>
 export type TodoTitle = Pick<Todo, 'title'>
-export type TodoCompleted = Pick<Todo, 'status'>
+export type todoStatus = Pick<Todo, 'status'>
+export type TodoImportant = Pick<Todo, 'important'>
 export type userID = Pick<Todo, 'userID'>
 export type TodoCreated = Pick<Todo, 'created'>
 
@@ -64,7 +66,7 @@ export interface TodoContextType {
 }
 
 export interface userData {
-  id: string | null
+  id: string 
   username: string | null
   password: string | null
   avatar: string | null

@@ -1,18 +1,21 @@
 import React, { useContext } from 'react'
-import { Todo } from './Todo'
 import { TodoContext } from '../contexts/todoContext'
 import { TODO_FILTERS } from '../const'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-
+import TodoCard from './TodoCard'
+import { userDataContext } from '@/contexts/userDataContext'
 export const Todos: React.FC = () => {
 
   const [parent] = useAutoAnimate()
   const { todos, filterSelected, setIsEditing, isEditing } = useContext(TodoContext)
+  const {userData } = useContext(userDataContext) 
   const filteredTodos = todos.filter(todo => {
     if (filterSelected === TODO_FILTERS.ACTIVE) return !todo.status
     if (filterSelected === TODO_FILTERS.COMPLETED) return todo.status
     return todo
   })
+
+
 
   return (
     <ul className=' todo-list w-full h-screen grid grid-cols-3 grid-rows-2 gap-6'  ref={parent}>
@@ -34,11 +37,10 @@ export const Todos: React.FC = () => {
                : ''}
             `}
         >
-          <Todo
+          <TodoCard
             key={todo.todoID}
-            todoID={todo.todoID}
-            title={todo.title}
-            status={todo.status} 
+            todo={todo}
+            userid={userData.id}
           />
         </li>
               
@@ -48,3 +50,5 @@ export const Todos: React.FC = () => {
       </ul>
   )
 }
+
+

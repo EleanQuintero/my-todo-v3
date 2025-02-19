@@ -49,7 +49,7 @@ export const useTodos = (): useTodosType => {
     }
   }
 
-  const updateTodo = async ({ todoID, todoTitle, todoStatus }: UpdateTodoProps): Promise<void> => {
+  const updateTodo = async ({ todoID, todoTitle, todoStatus, userid }: UpdateTodoProps): Promise<void> => {
     try {
       const data: { todo_title?: string, todo_status?: boolean } = {}
       if (todoTitle !== undefined) {
@@ -60,7 +60,7 @@ export const useTodos = (): useTodosType => {
       }
       console.log(data)
 
-      const response = await fetch(`${API_URL.PATCH}${todoID}/${userId}`, {
+      const response = await fetch(`${API_URL.PATCH}${todoID}/${userid}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -89,9 +89,9 @@ export const useTodos = (): useTodosType => {
     }
   }
 
-  const deleteCompletedTodos = async (): Promise<void> => {
+  const deleteCompletedTodos = async (userid: string): Promise<void> => {
     try {
-      const response = await fetch(`${API_URL.DELETE_COMPLETED_ALL}${userId}`, {
+      const response = await fetch(`${API_URL.DELETE_COMPLETED_ALL}${userid}`, {
         method: 'DELETE'
       })
 
