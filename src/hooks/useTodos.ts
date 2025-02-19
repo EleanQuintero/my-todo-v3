@@ -10,7 +10,7 @@ interface useTodosType {
   postTodo: (data: Newtodo) => Promise<void>
   updateTodo: ({ todoID, todoStatus, todoTitle }: UpdateTodoProps) => Promise<void>
   deleteTodo: ({ todoID }: DeleteTodoProps) => Promise<void>
-  deleteCompletedTodos: () => Promise<void>
+  deleteCompletedTodos: (userid: string) => Promise<void>
 
 }
 
@@ -85,7 +85,7 @@ export const useTodos = (): useTodosType => {
         throw new Error('No se pudo eliminar el todo:' + response.statusText)
       }
     } catch (error) {
-      throw new Error('Error al hacer la petición')
+      if (error instanceof Error) throw new Error(error.message)
     }
   }
 
@@ -99,7 +99,7 @@ export const useTodos = (): useTodosType => {
         throw new Error('No se han podido eliminar los todos:' + response.statusText)
       }
     } catch (error) {
-      throw new Error('Error al hacer la petición')
+      if (error instanceof Error) throw new Error(error.message)
     }
   }
 

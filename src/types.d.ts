@@ -21,8 +21,8 @@ export interface Newtodo {
 export interface UpdateTodoProps {
   userid: string
   todoID: number
-  todoTitle?: string
-  todoStatus?: boolean
+  todoTitle: string
+  todoStatus: boolean
 }
 
 export interface DeleteTodoProps {

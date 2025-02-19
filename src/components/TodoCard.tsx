@@ -28,10 +28,10 @@ interface TodoCardProps {
 
 const TodoCard: FC<TodoCardProps> = ({ todo, userid }) => {
   const { todoID, title, status, important, createdTo } = todo
-  const { todos, setTodos, sync } = useContext(TodoContext)
+  const { todos, setTodos } = useContext(TodoContext)
   const [isEditing, setIsEditing] = useState(false)
   const [editedTitle, setEditedTitle] = useState(title) 
-  const { updateTodo, deleteTodo, getTodos } = useTodos()
+  const { updateTodo, deleteTodo } = useTodos()
 
 
 
@@ -49,11 +49,10 @@ const TodoCard: FC<TodoCardProps> = ({ todo, userid }) => {
   }
 
   const handleComplete = ({ todoID }: { todoID: number }): void => {
-    console.log("Ejecutando handleComplete")
     const newTodos = todos.map((todo) => {
       if (todo.todoID === todoID) {
         const todoStatus = !todo.status
-          void updateTodo({ todoID, todoStatus, userid })
+          void updateTodo({ todoID, todoStatus, userid, todoTitle: todo.title })
         return {
           ...todo,
           status: todoStatus
@@ -68,12 +67,10 @@ const TodoCard: FC<TodoCardProps> = ({ todo, userid }) => {
   const handleUpdateTitle = ({ todoID, todoTitle }: UpdateTodoProps): void => {
     const newTodos = todos.map((todo) => {
       if (todo.todoID === todoID) {
-        if (sync) {
-          void updateTodo({ todoID, todoTitle, userid })
-        }
+          void updateTodo({ todoID, todoTitle, userid, todoStatus: todo.status })
         return {
           ...todo,
-          todoTitle
+          title: todoTitle
         }
       }
       return todo
@@ -82,29 +79,13 @@ const TodoCard: FC<TodoCardProps> = ({ todo, userid }) => {
     setTodos(newTodos)
   }
 
-  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    try {
-      if (e.key === 'Enter') {
-        setEditedTitle(editedTitle.trim())
-        setIsEditing('')
-      }
+  const handleStatus = () => {
+    handleComplete({ todoID })
+  }
 
-      if (editedTitle !== title) {
-        handleUpdateTitle({ todoID, todoTitle: editedTitle, userid })
-      }
-
-      if (editedTitle === '') {
-        handleRemove({ todoID })
-        setIsEditing('')
-      }
-
-      if (e.key === 'Escape') {
-        setEditedTitle(title)
-        setIsEditing('')
-      }
-    } finally {
-      void getTodos()
-    }
+  const handleSave = () => {
+    handleUpdateTitle({ todoID, todoTitle: editedTitle, userid, todoStatus: todo.status })
+    setIsEditing(false)
   }
 
 
@@ -122,8 +103,8 @@ const TodoCard: FC<TodoCardProps> = ({ todo, userid }) => {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         {isEditing ? (
           <div className="flex w-full items-center space-x-2">
-            <Input value={editedTitle} onKeyDown={handleKeyDown} onChange={(e) => setEditedTitle(e.target.value)} className="flex-grow" />
-            <Button size="sm" onClick={() => {}}>
+            <Input value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className="flex-grow" />
+            <Button size="sm" onClick={handleSave}>
               Guardar
             </Button>
             <Button size="sm" variant="outline" onClick={handleCancel}>
@@ -137,7 +118,7 @@ const TodoCard: FC<TodoCardProps> = ({ todo, userid }) => {
               <Button size="sm" variant="ghost" onClick={handleEdit}>
                 <Pencil className="h-4 w-4" />
               </Button>
-              <Button size="sm" variant={status ? "outline" : "default"} onClick={() => handleComplete({todoID})}>
+              <Button size="sm" variant={status ? "outline" : "default"} onClick={handleStatus}>
                 <CheckCircle2 className={`h-4 w-4 ${status ? "text-green-500" : "text-gray-400"}`} />
               </Button>
               {important && !status ? <AlertCircle className="h-5 w-5 text-amber-500" /> : null}
