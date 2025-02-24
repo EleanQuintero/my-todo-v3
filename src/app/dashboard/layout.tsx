@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { UserDataProvider } from "@/contexts/userDataContext";
 import { TodoProvider } from "@/contexts/todoContext";
-import { UserSection } from "@/components/UserSection";
 import "@/app/ui/globals.css"
+import { LogedSection } from "@/components/LogedSection";
 
 
 // const currentYear = new Date().getFullYear();
@@ -19,16 +19,14 @@ export default function DashboardLayout({
 }>) { 
  
   return (
-    <body>
-      <main className="text-UI-bg-main-text bg-UI-bg-main m-auto p-0 h-screen grid grid-cols-display">
+      <main className=" grid grid-rows-display lg:text-UI-bg-main-text lg:bg-UI-bg-main lg:m-auto lg:p-0 lg:h-screen lg:grid lg:grid-cols-display">
        <UserDataProvider>
         <TodoProvider>
-        <UserSection />
+        <LogedSection />
         {children}
        </TodoProvider>
        </UserDataProvider>
       </main>
-    </body>
 
 
   
